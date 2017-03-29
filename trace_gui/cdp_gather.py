@@ -29,7 +29,6 @@ class CDP(object):
 
     def loadCDP(self, cdp_index = 1):
         #Collecting traces from a specific cdp
-
         if(cdp_index <= self.ncdps and cdp_index > 0):
             traces = []
             traces_index = []
@@ -42,9 +41,12 @@ class CDP(object):
             self.traces_index = traces_index
         else:
             raise TypeError("Cdp index not existent in file")
+        return self
 
-    def scale_traces(self, perc=100):
+    def scale_traces(self, perc):
         #difference between two offsets in a CDP
+        #TO DO
+        #funcao bugada
         dx = np.abs(self.data['offset'][self.traces_index[0]] - self.data['offset'][self.traces_index[1]])
         self.traces = scaler.scale_data_map(self.traces, perc, dx)
         return self
