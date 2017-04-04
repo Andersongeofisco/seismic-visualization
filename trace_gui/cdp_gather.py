@@ -12,6 +12,8 @@ class CDP(object):
             self.cdp_index = cdp_index
             self.loadSU()
             self.loadCDP(self.cdp_index)
+            #TO-DO
+            self.dx =  np.abs(self.data['offset'][self.traces_index[0]] - self.data['offset'][self.traces_index[1]])
 
         else:
             raise TypeError("File type not supported")
@@ -45,8 +47,6 @@ class CDP(object):
 
     def scale_traces(self, perc):
         #difference between two offsets in a CDP
-        #TO DO
+        #TO-DO
         #funcao bugada
-        dx = np.abs(self.data['offset'][self.traces_index[0]] - self.data['offset'][self.traces_index[1]])
-        self.traces = scaler.scale_data_map(self.traces, perc, dx)
-        return self
+        return scaler.scale_data_map(self.traces, perc, self.dx)
