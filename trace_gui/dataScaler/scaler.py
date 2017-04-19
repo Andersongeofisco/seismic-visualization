@@ -1,3 +1,5 @@
+#!/usr/bin/python -d
+
 import numpy as np
 
 def get_max_amplitude(traces, perc):
@@ -7,7 +9,7 @@ def get_max_amplitude(traces, perc):
     max_amplitude = sorted_array[index - 1]
 
     return max_amplitude
-
+#TO DO: divide the scale values by the RMS amplitude (square root of the average of the sum of the square or the trace values)
 def scale_data(traces, perc, dx):
     #Correcting amplitudes for all data
     max_amplitude =  get_max_amplitude(traces, perc)

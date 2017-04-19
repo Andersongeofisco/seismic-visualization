@@ -1,22 +1,21 @@
-import su
+import suTools.su as su
 import fnmatch
 import numpy as np
-import cdp_gather
-import scaler
+from dataScaler import scaler
 
 class CDP(object):
     #Loads first CDP for default
-    def __init__(self, filepath, cdp_index=1):
+    def __init__(self, filepath, index=1):
         if(fnmatch.fnmatch(filepath, '*.su')):
             self.filepath = filepath
-            self.cdp_index = cdp_index
+            self.index = index
             self.loadSU()
-            self.loadCDP(self.cdp_index)
+            self.loadCDP(self.index)
             #TO-DO
             self.dx =  np.abs(self.data['offset'][self.traces_index[0]] - self.data['offset'][self.traces_index[1]])
-
         else:
             raise TypeError("File type not supported")
+
 
     #Reads data from file su or segy
     def loadSU(self):
@@ -29,13 +28,13 @@ class CDP(object):
         self.interval = su_header['dt'][0]*pow(10,-6)
         self.ncdps = len(np.unique(self.data['cdp']))
 
-    def loadCDP(self, cdp_index = 1):
+    def loadCDP(self, index = 1):
         #Collecting traces from a specific cdp
-        if(cdp_index <= self.ncdps and cdp_index > 0):
+        if(index <= self.ncdps and index > 0):
             traces = []
             traces_index = []
             for i in range(0, len(self.data)):
-                if(self.data['cdp'][i] == cdp_index):
+                if(self.data['cdp'][i] == index):
                     traces.append(self.data['trace'][i])
                     traces_index.append(i)
 
@@ -44,6 +43,13 @@ class CDP(object):
         else:
             raise TypeError("Cdp index not existent in file")
         return self
+
+    def getOffsets(self):
+        offsets = []
+        for index in self.traces_index:
+            offsets.append(self.data['offset'][index])
+
+        return offsets
 
     def scale_traces(self, perc):
         #difference between two offsets in a CDP

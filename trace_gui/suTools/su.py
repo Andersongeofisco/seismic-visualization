@@ -4,7 +4,7 @@ python SU stdin/stdout interface module
 
 	data = readSU()
 	writeSU(data)
-	
+
 uses custom dtypes for a very fast read/write to stdin/stdout
 returns a single np.ndarray with dtype=sufile
 a numpy 2d array of traces can be addressed as data['traces']
@@ -108,8 +108,8 @@ su_header_dtype = np.dtype([
 
 def typeSU(ns):
 	return np.dtype(su_header_dtype.descr + [('trace', ('<f4',ns))])
-	
-		
+
+
 def readSUheader(filename):
 	raw = open(filename, 'rb').read()
 	return np.fromstring(raw, dtype=su_header_dtype, count=1)
@@ -125,19 +125,13 @@ def readSU(filename=None):
 	print(file_dtype)
 	data = np.fromstring(raw, dtype=file_dtype)
 	return data
-	
+
 def writeSU(data, filename=None):
 	if filename == None:
 		data.tofile(sys.stdout)
 	else:
 		data.tofile(filename)
-		
+
 if __name__ == "__main__":
 	data = readSU()
 	writeSU(data)
-	
-
-	
-
-
-
