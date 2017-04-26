@@ -18,5 +18,5 @@ class cmpPlot(object):
             for i, (trace, offset) in enumerate(zip(traces, offsets)):
                 x = trace + offset
                 item = pg.PlotDataItem(x, y, pen=pg.mkPen('k', width=0.5))
-                self.traces_items['offset'] = item
+                self.traces_items[str(offset)] = item
                 self.window.addItem(item)
