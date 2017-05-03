@@ -4,7 +4,7 @@ import numpy as np
 from dataScaler import scaler
 
 class Gather(object):
-    def __init__(self, filepath, dx, gatherType, index=1):
+    def __init__(self, filepath, dx, gatherType, index=0):
         if(fnmatch.fnmatch(filepath, '*.su')):
             self.filepath = filepath
             self.index = index
@@ -29,12 +29,12 @@ class Gather(object):
         self.ngroups = len(np.unique(self.data[self.type]))
         self.groups  = dict(enumerate(np.unique(self.data[self.type])))
 
-    def loadGather(self, index = 1):
+    def loadGather(self, index = 0):
         self.index = index
         if(self.type == "offset"):
             self.dx = self.getGroupPos()
 
-        if(index <= self.ngroups and index > 0):
+        if(index < self.ngroups and index >= 0):
             traces = []
             traces_index = []
             for i in range(0, len(self.data)):
@@ -48,7 +48,7 @@ class Gather(object):
         return self
 
     def getGroupPos(self):
-        return self.groups[self.index-1]
+        return self.groups[self.index]
 
     def getOffsets(self):
         off = self.getGroupPos()
@@ -61,7 +61,27 @@ class Gather(object):
 
         return offsets
 
-    def scale_traces(self, perc):
+    #Get group index in gather according to the parameter from the gather
+    def getIndex(self,keyType, key):
+        if(keyType is not self.type):
+            raise TypeError("Wrong gather for this key type")
+        else:
+            #search for the group in gather data
+            for index, value in self.groups.items():
+                if(value == key):
+                    return index
+    #Get a parameter from a trace
+    #Parameters: sx, gx, offset and cdp
+    def getTraceParams(self, traceIndex):
+        sx = self.data['sx'][traceIndex]
+        gx = self.data['gx'][traceIndex]
+        offset = self.data['offset'][traceIndex]
+        cdp = self.data['cdp'][traceIndex]
+
+        return {'sx': sx, 'gx': sx, 'offset': sx, 'cdp': sx}
+
+
+    def scaleTraces(self, perc):
         #difference between two offsets in a CDP
         #TO-DO
         #funcao bugada
