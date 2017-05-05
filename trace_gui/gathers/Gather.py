@@ -77,8 +77,9 @@ class Gather(object):
         gx = self.data['gx'][traceIndex]
         offset = self.data['offset'][traceIndex]
         cdp = self.data['cdp'][traceIndex]
+        posX = self.getOffsets()[traceIndex]
 
-        return {'sx': sx, 'gx': sx, 'offset': sx, 'cdp': sx}
+        return {'sx': sx, 'gx': gx, 'offset': offset, 'cdp': cdp, 'posX': posX}
 
 
     def scaleTraces(self, perc):
