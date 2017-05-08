@@ -1,6 +1,6 @@
 import pyqtgraph as pg
-from pyqtgraph import PlotCurveItem
 import numpy as np
+from pyqtgraph import PlotCurveItem
 from signal import signal
 
 class PlotTraceItem(PlotCurveItem):

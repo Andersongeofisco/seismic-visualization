@@ -1,14 +1,11 @@
 import pyqtgraph as pg
-from pyqtgraph import QtGui
-from pyqtgraph import QtCore
 import numpy as np
+from pyqtgraph import QtGui
 from gathers.Gather import Gather
 from windows.GatherPlot import GatherPlotWidget
 from windows.controller import gatherCoord
 from windows.PlotTraceItem import PlotTraceItem
-from pyqtgraph import PlotCurveItem
-from pyqtgraph import PlotDataItem
-from pyqtgraph import PlotWidget
+
 
 ## Always start by initializing Qt (only once per application)
 app = QtGui.QApplication([])
@@ -25,44 +22,14 @@ cs_item = Gather("data/traces_cs.su", 20,"sx", 0)
 #cr_item = Gather("data/traces_cr.su", 20,"gx", 50)
 co_item = Gather("data/traces_co.su", 10, "offset", 40)
 
+#Initialize reference trace as the first trace available in gather
 traceRef = cs_item.getTraceParams(0)
-print("before")
-print(co_item.index)
 control = gatherCoord(cs_item, co_item, traceRef)
-print("after")
-print(co_item.index)
 
 # cmp = GatherPlotWidget(cdp_item)
 cs_p = GatherPlotWidget(cs_item, drawRef = True)
 # cr_p = GatherPlotWidget(cr_item)
 co_p = GatherPlotWidget(co_item)
-
-
-
-
-# # # cmp.plotGather()
-# cs_p.plotGather()
-# # # cr_p.plotGather()
-# co_p.plotGather()
-# def testando(self):
-#     print("oi traco")
-# cs_p = PlotWidget(parent=None)
-
-# cs_p.mouseReleaseEvent = lambda event:print ('oi bruno')
-
-
-# testItem = PlotCurveItem([1,2,3], [1,2,3],pen=pg.mkPen('k', width=20), clickable=True)
-# testItem = PlotTraceItem([1,2,3], [1,2,3],{'oi':5})
-# testItem.sigClicked.connect(testando)
-# cs_p.addItem(testItem)
-#
-# testItem.setData([4,5,6], [3,2,1])
-
-# items = cs_p.getPlotItem().listDataItems()
-# print(items)
-#
-# for item in items:
-#     item.sigClicked.connect(lambda event:print ('oi traco'))
 
 ## Create a grid layout to manage the widgets size and position
 layout = QtGui.QGridLayout()

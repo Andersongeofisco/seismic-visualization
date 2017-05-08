@@ -5,9 +5,6 @@ import pyqtgraph as pg
 import numpy as np
 from copy import deepcopy
 
-#Plotar traços do gather
-#Plotar linha vermelha de referência
-
 class GatherPlotWidget(PlotWidget):
     def __init__(self, gather, refTrace = None, drawRef = False):
         super(GatherPlotWidget, self).__init__(parent=None)
@@ -55,9 +52,6 @@ class GatherPlotWidget(PlotWidget):
         self.setYRange(np.min(y), np.max(y))
 
         for trace, offset, index in zip(traces, offsets, indexes):
-            # print("tamanho")
-            # print(len(trace))
-            # print(len(y))
             trace[0] = 0
             trace[-1] = 0
             #Zero crossings

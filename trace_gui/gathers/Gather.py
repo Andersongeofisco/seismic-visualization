@@ -83,7 +83,4 @@ class Gather(object):
 
 
     def scaleTraces(self, perc):
-        #difference between two offsets in a CDP
-        #TO-DO
-        #funcao bugada
         return scaler.scale_data_map(self.traces, perc, self.dx)
